@@ -48,6 +48,7 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-1">
           <Link to="/" className="px-3 py-2 text-sm text-muted-foreground hover:text-foreground rounded-md">Home</Link>
           <Link to="/appointments" className="px-3 py-2 text-sm text-muted-foreground hover:text-foreground rounded-md">Appointments</Link>
+          <Link to="/reports" className="px-3 py-2 text-sm text-muted-foreground hover:text-foreground rounded-md">Reports</Link>
           {!isAuthed ? (
             <>
               <Link to="/login" className="px-3 py-2 text-sm text-muted-foreground hover:text-foreground rounded-md">Login</Link>
@@ -73,6 +74,7 @@ export default function Navbar() {
         <div className="md:hidden border-t border-border/60 px-4 py-3 flex flex-col gap-1">
           <Link to="/" onClick={() => setOpen(false)} className="px-3 py-2 text-sm">Home</Link>
           <Link to="/appointments" onClick={() => setOpen(false)} className="px-3 py-2 text-sm">Appointments</Link>
+          <Link to="/reports" onClick={() => setOpen(false)} className="px-3 py-2 text-sm">Reports</Link>
           {!isAuthed ? (
             <>
               <Link to="/login" onClick={() => setOpen(false)} className="px-3 py-2 text-sm">Login</Link>

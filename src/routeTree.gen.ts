@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as ReportsRouteImport } from './routes/reports'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AppointmentsRouteImport } from './routes/appointments'
@@ -18,6 +19,11 @@ import { Route as IndexRouteImport } from './routes/index'
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportsRoute = ReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProfileRoute = ProfileRouteImport.update({
@@ -46,6 +52,7 @@ export interface FileRoutesByFullPath {
   '/appointments': typeof AppointmentsRoute
   '/login': typeof LoginRoute
   '/profile': typeof ProfileRoute
+  '/reports': typeof ReportsRoute
   '/signup': typeof SignupRoute
 }
 export interface FileRoutesByTo {
@@ -53,6 +60,7 @@ export interface FileRoutesByTo {
   '/appointments': typeof AppointmentsRoute
   '/login': typeof LoginRoute
   '/profile': typeof ProfileRoute
+  '/reports': typeof ReportsRoute
   '/signup': typeof SignupRoute
 }
 export interface FileRoutesById {
@@ -61,14 +69,28 @@ export interface FileRoutesById {
   '/appointments': typeof AppointmentsRoute
   '/login': typeof LoginRoute
   '/profile': typeof ProfileRoute
+  '/reports': typeof ReportsRoute
   '/signup': typeof SignupRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/appointments' | '/login' | '/profile' | '/signup'
+  fullPaths:
+    | '/'
+    | '/appointments'
+    | '/login'
+    | '/profile'
+    | '/reports'
+    | '/signup'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/appointments' | '/login' | '/profile' | '/signup'
-  id: '__root__' | '/' | '/appointments' | '/login' | '/profile' | '/signup'
+  to: '/' | '/appointments' | '/login' | '/profile' | '/reports' | '/signup'
+  id:
+    | '__root__'
+    | '/'
+    | '/appointments'
+    | '/login'
+    | '/profile'
+    | '/reports'
+    | '/signup'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -76,6 +98,7 @@ export interface RootRouteChildren {
   AppointmentsRoute: typeof AppointmentsRoute
   LoginRoute: typeof LoginRoute
   ProfileRoute: typeof ProfileRoute
+  ReportsRoute: typeof ReportsRoute
   SignupRoute: typeof SignupRoute
 }
 
@@ -86,6 +109,13 @@ declare module '@tanstack/react-router' {
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reports': {
+      id: '/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof ReportsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/profile': {
@@ -124,8 +154,19 @@ const rootRouteChildren: RootRouteChildren = {
   AppointmentsRoute: AppointmentsRoute,
   LoginRoute: LoginRoute,
   ProfileRoute: ProfileRoute,
+  ReportsRoute: ReportsRoute,
   SignupRoute: SignupRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
