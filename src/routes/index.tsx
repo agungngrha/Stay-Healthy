@@ -100,7 +100,7 @@ function Index() {
   );
 }
 
-function Stat({ value, label }) {
+function Stat({ value, label }: { value: string; label: string }) {
   return (
     <div>
       <dt className="text-2xl font-semibold text-foreground">{value}</dt>
@@ -109,7 +109,7 @@ function Stat({ value, label }) {
   );
 }
 
-function Feature({ icon: Icon, title, desc }) {
+function Feature({ icon: Icon, title, desc }: { icon: any; title: string; desc: string }) {
   return (
     <div className="rounded-2xl border border-border bg-card p-6 shadow-[var(--shadow-card)]">
       <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--primary-soft)] text-primary">
